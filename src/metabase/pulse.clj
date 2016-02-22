@@ -26,9 +26,9 @@
 
 ;;; ## CONFIG
 
-(def ^:private ^:const card-width 400)
-(def ^:private ^:const rows-limit 10)
-(def ^:private ^:const cols-limit 3)
+(def ^:private ^:const card-width 1200)
+(def ^:private ^:const rows-limit 100)
+(def ^:private ^:const cols-limit 20)
 (def ^:private ^:const sparkline-dot-radius 6)
 (def ^:private ^:const sparkline-thickness 3)
 (def ^:private ^:const sparkline-pad 8)
@@ -432,10 +432,7 @@
   [render-img include-buttons {:keys [card result]}]
   [:div {:style (style {:margin-top       :10px
                         :margin-bottom    :20px
-                        :border           "1px solid #dddddd"
-                        :border-radius    :2px
-                        :background-color :white
-                        :box-shadow       "0 1px 2px rgba(0, 0, 0, .08)"})}
+                        })}
    (render-pulse-card card (:data result) render-img true include-buttons)])
 
 (defn render-pulse-card-to-png
