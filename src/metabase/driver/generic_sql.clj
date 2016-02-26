@@ -172,8 +172,8 @@
                                                (-fetch-page (inc page-num)))))))]
     (fetch-page 0)))
 
-(defn- table-rows-seq [_ database table-name]
-  (k/select (korma-entity database {:table-name table-name})))
+(defn- table-rows-seq [_ database table]
+  (k/select (korma-entity database table)))
 
 (defn- field-avg-length [driver field]
   (or (some-> (korma-entity (field/table field))
@@ -242,7 +242,7 @@
   (set (for [{:keys [column_name type_name]} (jdbc/result-set-seq (.getColumns metadata nil schema name nil))
              :let [calculated-special-type (column->special-type driver column_name (keyword type_name))]]
          (merge {:name        column_name
-                 :column-type type_name
+                 :custom      {:column-type type_name}
                  :base-type   (or (column->base-type driver (keyword type_name))
                                   (do (log/warn (format "Don't know how to map column type '%s' to a Field base_type, falling back to :UnknownField." type_name))
                                       :UnknownField))}
