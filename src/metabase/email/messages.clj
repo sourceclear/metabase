@@ -63,7 +63,7 @@
          (u/is-email? email)
          (map? context)]}
   (let [model->url-fn #(case %
-                        "Card"      url/question-url
+                        "Card"      url/card-url
                         "Dashboard" url/dashboard-url
                         "Pulse"     url/pulse-url
                         "Segment"   url/segment-url)
@@ -119,7 +119,7 @@
                                            :pulse           (html body)
                                            :pulseName       (:name pulse)
                                            :sectionStyle    p/section-style
-                                           :colorGrey4      p/color-grey-4
+                                           :colorGrey4      p/color-gray-4
                                            :quotation       (:quote data-quote)
                                            :quotationAuthor (:author data-quote)
                                            :logoFooter      true})]

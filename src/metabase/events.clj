@@ -76,7 +76,7 @@
   channel)
 
 (defn subscribe-to-topics
-  "Convenience method for subscribing to series of topics against a single channel."
+  "Convenience method for subscribing to a series of topics against a single channel."
   [topics channel]
   {:pre [(coll? topics)]}
   (loop [[topic & rest] (vec topics)]
@@ -96,7 +96,7 @@
     (try
       (let [evt (async/<! channel)]
         (handler-fn evt))
-      (catch Exception e
+      (catch Throwable e
         (log/error "Unexpected error listening on events" e)))
     (recur)))
 

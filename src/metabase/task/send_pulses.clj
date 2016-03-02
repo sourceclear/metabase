@@ -64,7 +64,9 @@
         curr-monthweek     (monthweek now)]
     (send-pulses! curr-hour curr-weekday curr-monthday curr-monthweek)))
 
-(defn- task-init []
+(defn task-init
+  "Automatically called during startup; start the job for sending pulses."
+  []
   ;; build our job
   (reset! send-pulses-job (jobs/build
                                (jobs/of-type SendPulses)
@@ -113,7 +115,7 @@
   (let [image-byte-array (p/render-pulse-card-to-png card data)
         slack-file-url   (slack/upload-file! image-byte-array "image.png" channel-id)]
     {:title      card-name
-     :title_link (urls/question-url card-id)
+     :title_link (urls/card-url card-id)
      :image_url  slack-file-url
      :fallback   card-name}))
 
@@ -165,5 +167,5 @@
         (when-let [pulse (pulse/retrieve-pulse pulse-id)]
           (send-pulse! pulse :channel-ids (mapv :id (get channels-by-pulse pulse-id))))
         (log/debug (format "Finished Pulse Execution: %d" pulse-id))
-        (catch Exception e
+        (catch Throwable e
           (log/error "Error sending pulse:" pulse-id e))))))

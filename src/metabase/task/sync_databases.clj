@@ -9,8 +9,8 @@
                       [task :as task])
             [metabase.models.database :refer [Database]]))
 
-(def sync-databases-job-key "metabase.task.sync-databases.job")
-(def sync-databases-trigger-key "metabase.task.sync-databases.trigger")
+(def ^:private ^:const sync-databases-job-key     "metabase.task.sync-databases.job")
+(def ^:private ^:const sync-databases-trigger-key "metabase.task.sync-databases.trigger")
 
 (defonce ^:private sync-databases-job (atom nil))
 (defonce ^:private sync-databases-trigger (atom nil))
@@ -23,10 +23,12 @@
       (try
         ;; NOTE: this happens synchronously for now to avoid excessive load if there are lots of databases
         (driver/sync-database! database)
-        (catch Exception e
+        (catch Throwable e
           (log/error "Error syncing database: " (:id database) e))))))
 
-(defn- task-init []
+(defn task-init
+  "Automatically called during startup; start the job for syncing databases."
+  []
   ;; build our job
   (reset! sync-databases-job (jobs/build
                                (jobs/of-type SyncDatabases)
