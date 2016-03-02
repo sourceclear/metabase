@@ -28,7 +28,7 @@
 
 (def ^:private ^:const card-width 1200)
 (def ^:private ^:const rows-limit 100)
-(def ^:private ^:const cols-limit 20)
+(def ^:private ^:const cols-limit 22)
 (def ^:private ^:const sparkline-dot-radius 6)
 (def ^:private ^:const sparkline-thickness 3)
 (def ^:private ^:const sparkline-pad 8)
